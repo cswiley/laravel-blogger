@@ -20,5 +20,15 @@
         "psr-4" : {
             "Cswiley\\Blogging\\" : "src"
         }
+    },
+    "extra" : {
+        "laravel" : {
+            "providers" : [
+                "Cswiley\\Blogging\\Providers\\BloggingServiceProvider"
+            ],
+            "aliases"   : {
+                "Blog" : "Cswiley\\Blogging\\Models\\Blog"
+            }
+        }
     }
 }
