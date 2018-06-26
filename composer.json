@@ -24,7 +24,7 @@
     "extra" : {
         "laravel" : {
             "providers" : [
-                "Cswiley\\Blogging\\Providers\\BloggingServiceProvider"
+                "Cswiley\\Blogging\\BloggingServiceProvider"
             ],
             "aliases"   : {
                 "Blog" : "Cswiley\\Blogging\\Models\\Blog"
