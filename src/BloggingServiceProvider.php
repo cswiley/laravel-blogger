@@ -1,6 +1,6 @@
 <?php
 
-namespace Cswiley\Blogging\Providers;
+namespace Cswiley\Blogging;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -46,7 +46,7 @@ class BloggingServiceProvider extends ServiceProvider
 
     private function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '../../publishable/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../publishable/migrations');
     }
 
 
@@ -59,7 +59,7 @@ class BloggingServiceProvider extends ServiceProvider
 
     private function loadRoutes()
     {
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
 
     private function registerController()
@@ -74,8 +74,8 @@ class BloggingServiceProvider extends ServiceProvider
 
     private function registerPublish()
     {
-        $publishablePath = dirname(__DIR__) . '/publishable';
-        $resourcePath = dirname(__DIR__) . "/resources/";
+        $publishablePath = dirname(__DIR__) . '/../pupublishable';
+        $resourcePath = dirname(__DIR__) . "/../resources/";
 
         $publishable = [
            'assets' => [
