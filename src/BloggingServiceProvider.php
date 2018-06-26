@@ -53,7 +53,7 @@ class BloggingServiceProvider extends ServiceProvider
     public function loadConfig()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/publishable/config/styleguide.php', 'styleguide'
+            dirname(__DIR__) . '/publishable/config/blog.php', 'blog'
         );
     }
 
@@ -74,8 +74,8 @@ class BloggingServiceProvider extends ServiceProvider
 
     private function registerPublish()
     {
-        $publishablePath = dirname(__DIR__) . '/../pupublishable';
-        $resourcePath = dirname(__DIR__) . "/../resources/";
+        $publishablePath = dirname(__DIR__) . '/../publishable';
+        $resourcePath = dirname(__DIR__) . "/../resources";
 
         $publishable = [
            'assets' => [
