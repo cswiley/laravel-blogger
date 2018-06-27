@@ -57,7 +57,7 @@
 
     import flatPickr from 'vue-flatpickr-component';
     import 'flatpickr/dist/flatpickr.css';
-    import ImageUploader from './FileUploader';
+    import ImageUploader from './ImageUploader';
 
     let moment = require('moment-timezone');
     require('summernote/dist/summernote-lite');

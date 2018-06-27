@@ -1,6 +1,6 @@
 <?php
 
-namespace \Cswiley\Blogging\Controllers\API;
+namespace \Cswiley\Blogger\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

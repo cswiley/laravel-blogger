@@ -37,7 +37,10 @@ return [
    |
    |
    */
-    'assets_path'  => '/vendor/cswiley/blogging/assets',
+    'assets_path'  => '/vendor/cswiley/blogger/assets',
+
+
+    'view_path'  => 'views/vendor/blogger',
 
     /*
    |--------------------------------------------------------------------------
@@ -55,6 +58,7 @@ return [
      */
     'stylesheets'  => [
         '/css/app.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css'
     ],
 
     /*
@@ -67,5 +71,7 @@ return [
     'scripts'      => [
         '/js/manifest.js',
         '/js/vendor.js',
+        '/js/app.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js'
     ]
 ];

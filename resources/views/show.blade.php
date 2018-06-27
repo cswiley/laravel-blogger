@@ -1,4 +1,4 @@
-@extends('layouts.site', ['bodyClass' => ''])
+@extends('blog::layouts.site', ['bodyClass' => ''])
 
 @section ('content')
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Cswiley\Blogging;
+namespace Cswiley\Blogger;
 
 use Illuminate\Support\ServiceProvider;
 
-class BloggingServiceProvider extends ServiceProvider
+class BloggerServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the applicatioan services.
@@ -26,12 +26,12 @@ class BloggingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        $this->loadHelpers();
         //
 //        $this->app->singleton(StyleGuide::class, function () {
 //            return new StyleGuide();
 //        });
 
+        $this->loadHelpers();
         $this->registerController();
         $this->registerPublish();
 
@@ -53,7 +53,7 @@ class BloggingServiceProvider extends ServiceProvider
     public function loadConfig()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/publishable/config/blog.php', 'blog'
+            dirname(__DIR__) . '/publishable/config/blog.php', 'blogger'
         );
     }
 
@@ -64,35 +64,39 @@ class BloggingServiceProvider extends ServiceProvider
 
     private function registerController()
     {
-//        $this->app->make('Cswiley\Blogging\StyleGuideController');
+        $this->app->make('Cswiley\Blogger\Controllers\BlogController');
     }
 
     private function loadViews()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'blog');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'blogger');
     }
 
     private function registerPublish()
     {
-        $publishablePath = dirname(__DIR__) . '/../publishable';
-        $resourcePath = dirname(__DIR__) . "/../resources";
+        $publishablePath = dirname(__DIR__) . '/publishable';
+        $resourcePath = dirname(__DIR__) . "/resources";
 
         $publishable = [
            'assets' => [
-               "{$publishablePath}/assets" => public_path(config('blog.assets_path'))
+               "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
            ],
            'config' => [
-               "{$publishablePath}/config/blog.php" => config_path('blog.php'),
+               "{$publishablePath}/config/blog.php" => config_path('blogger.php'),
            ],
            'views' => [
-              "{$resourcePath}/views"  => resource_path('views/vendor/blogging'),
+              "{$resourcePath}/views"  => resource_path(config('blogger.view_path')),
            ],
            'js' => [
-               "{$resourcePath}/js"  => resource_path('views/vendor/blogging'),
+               "{$resourcePath}/assets/js"  => resource_path('assets' . config('blogger.assets_path') . '/js'),
            ],
            'sass' => [
-               "{$resourcePath}/views"  => resource_path('views/vendor/blogging'),
+               "{$resourcePath}/assets/sass"  => resource_path('assets' . config('blogger.assets_path') . '/sass'),
            ],
+           'migrations' => [
+               "{$publishablePath}/migrations/" => database_path('migrations')
+           ]
+
         ];
 
         foreach ($publishable as $label => $val) {

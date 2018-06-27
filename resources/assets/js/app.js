@@ -5,10 +5,12 @@
  */
 
 window.Vue = require('vue');
-window.$ = require('jquery');
+window.jQuery = require('jquery');
+window.$ = window.jQuery;
+Vue.config.silent = true;
+
 require('foundation-sites');
 require('lodash');
-Vue.config.silent = true;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -1,10 +1,9 @@
 <?php
 
-namespace Cswiley\Blogging\Models;
+namespace Cswiley\Blogger\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Webpatser\Uuid\Uuid;
 
 class Blog extends Model
 {

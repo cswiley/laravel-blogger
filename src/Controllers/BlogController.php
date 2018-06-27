@@ -1,9 +1,11 @@
 <?php
 
-namespace Cswiley\Blogging;
+namespace Cswiley\Blogger\Controllers;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Cswiley\Blogger\Models\Blog;
+use Cswiley\Blogger\Resources\BlogResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function json_encode;
@@ -15,9 +17,15 @@ class BlogController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', [
-            'except' => ['show']
-        ]);
+//        $this->middleware(function ($request, $next) {
+//            // ...
+//            dd(Auth::id());
+//
+//            return $next($request);
+//        });
+//        $this->middleware('auth', [
+//            'except' => ['show']
+//        ]);
     }
 
     /**
@@ -29,7 +37,7 @@ class BlogController extends Controller
     {
         $blogs = Blog::all();
 
-        return view('blog.index', [
+        return view('blog::index', [
             'blogs' => $blogs
         ]);
     }
@@ -41,7 +49,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create', [
+        return view('blog::create', [
             'options' => json_encode([
                 'visibility_options' => Blog::$visibilityLookup
             ])
@@ -83,7 +91,7 @@ class BlogController extends Controller
             abort(404, 'Blog not found');
         }
 
-        return view('blog.show', [
+        return view('blog::show', [
             'blog' => $blog->toArray()
         ]);
     }
@@ -95,7 +103,7 @@ class BlogController extends Controller
             abort(404, 'blog not found');
         }
 
-        return view('blog.show', [
+        return view('blog::show', [
             'blog'      => $input,
             'isPreview' => true
         ]);
@@ -109,7 +117,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        return view('blog.edit', ['blog' => $blog]);
+        return view('blog::edit', ['blog' => $blog]);
     }
 
     /**

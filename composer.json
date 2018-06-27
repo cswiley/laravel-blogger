@@ -1,5 +1,5 @@
 {
-    "name": "cswiley/laravel-blogging",
+    "name": "cswiley/laravel-blogger",
     "description": "Laravel blog package",
     "type": "library",
     "license": "MIT",
@@ -24,10 +24,10 @@
     "extra" : {
         "laravel" : {
             "providers" : [
-                "Cswiley\\Blogging\\BloggingServiceProvider"
+                "Cswiley\\Blogging\\BloggerServiceProvider"
             ],
             "aliases"   : {
-                "Blog" : "Cswiley\\Blogging\\Models\\Blog"
+                "Blog" : "Cswiley\\Blogger\\Models\\Blog"
             }
         }
     }

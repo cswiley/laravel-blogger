@@ -15,8 +15,10 @@
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
     {{--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>--}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    @foreach (config('blog.stylesheets') as $stylesheet)
+        <link rel="stylesheet" href="{{ $stylesheet }}">
+    @endforeach
+    <link rel="stylesheet" href="{{ blog_assets('css/app.css') }}">
 </head>
 <body class="{{$page['slug'] or 'generic'}} {{$bodyClass or ''}}">
 
@@ -26,12 +28,10 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
-<script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
-<script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
-@stack('scripts')
-@yield('javascript')
+@foreach (config('blog.scripts') as $scripts)
+    <script type="text/javascript" src="{{ $scripts }}"></script>
+@endforeach
+<script type="text/javascript" src="{{ blog_assets('js/app.js') }}"></script>
 
 </body>
 </html>

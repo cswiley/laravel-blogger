@@ -1,8 +1,8 @@
-<?php namespace Cswiley\Blogging\Controllers\API;
+<?php namespace Cswiley\Blogger\Controllers\API;
 
-use Cswiley\Blogging\Models\Blog;
-use Cswiley\Blogging\Resources\BlogCollection;
-use Cswiley\Blogging\Resources\BlogResource;
+use Cswiley\Blogger\Models\Blog;
+use Cswiley\Blogger\Resources\BlogCollection;
+use Cswiley\Blogger\Resources\BlogResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,6 +10,7 @@ class BlogController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth', [
             'except' => ['show']
         ]);

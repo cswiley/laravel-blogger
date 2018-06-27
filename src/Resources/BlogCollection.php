@@ -1,6 +1,6 @@
 <?php
 
-namespace Cswiley\Blogging\Resources;
+namespace Cswiley\Blogger\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
