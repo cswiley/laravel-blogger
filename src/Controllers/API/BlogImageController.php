@@ -1,18 +1,21 @@
 <?php
 
-namespace \Cswiley\Blogger\Controllers\API;
+namespace Cswiley\Blogger\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use function response;
+use Cswiley\Blogger\JsonResponse;
 
 class BlogImageController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'web',
+            'auth'
+        ]);
     }
 
     /**
@@ -25,6 +28,11 @@ class BlogImageController extends Controller
         return view('upload');
     }
 
+    protected function storageDisk()
+    {
+        return Storage::disk(config('blogger.storage_disk'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,44 +42,30 @@ class BlogImageController extends Controller
     public function store(Request $request)
     {
         if ($request->file('file')->isValid()) {
-            $path = $request->file->store('images', 'public');
+            $path = $request->file->store(config('blogger.storage_directory'), config('blogger.storage_disk'));
 
-//            $path = $request->file->store('images', 's3');
-            return response()->json([
-                'ok'   => true,
-                'path' => '/storage/' . $path
+            return JsonResponse::jsonOk([
+                'path' => $path,
+                'url'  => $this->storageDisk()->url($path)
             ]);
         }
+
+        return JsonResponse::jsonFail('Unable to store image');
     }
 
     public function delete(Request $request)
     {
         $path = $request->input('path');
-        if (! empty($path)) {
-            $path = str_replace('/storage/', '', $path);
-            if (Storage::disk('public')->exists($path)) {
-                $res = Storage::disk('public')->delete($path);
+        if (!empty($path)) {
+            if ($this->storageDisk()->exists($path)) {
+                $res = $this->storageDisk()->delete($path);
                 if ($res) {
-                    return $this->jsonOk(['message' => 'Image removed']);
+                    return JsonResponse::jsonOk(['message' => 'Image removed']);
                 }
             }
         }
 
-        return $this->jsonFail('Unable to delete');
+        return JsonResponse::jsonFail('Unable to delete');
 
-    }
-
-    private function jsonOk($data)
-    {
-        return response()->json(array_merge([
-            'ok' => true,
-        ], $data));
-    }
-
-    private function jsonFail($message) {
-        return response()->json([
-            'ok' => false,
-            'error' => $message
-        ]);
     }
 }

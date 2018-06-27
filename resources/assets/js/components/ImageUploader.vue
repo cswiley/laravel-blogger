@@ -15,23 +15,26 @@
 
 <script>
     export default {
-        props   : {
-            path: {
+        name    : "image-uploader",
+        props: {
+            path  : {
                 type   : String,
                 default: false
             },
+            src: {
+                type   : String,
+                default: ''
+            },
             action: {
-                type: String,
+                type   : String,
                 require: true
             }
         },
-        name    : "file-uploader",
         data() {
-            debugger;
             return {
                 data: {
                     path   : this.path,
-                    preview: this.path,
+                    preview: this.src,
                     image  : false
                 }
             };
@@ -57,6 +60,8 @@
         watch   : {
             path: function (newVal, oldVal) {
                 this.data.path    = newVal;
+            },
+            src: function (newVal, oldVal) {
                 this.data.preview = newVal;
             }
 
@@ -100,6 +105,7 @@
                     }).then(function (response) {
                         if (response.ok) {
                             vue.data.path = false;
+                            vue.data.preview = '';
                             vue.$emit('deleted', true);
                         }
                     });
@@ -117,6 +123,7 @@
                 }).then(function (response) {
                     if (response.ok) {
                         vue.data.path = response.path;
+                        vue.data.preview = response.url;
                         vue.$emit('uploaded', response.path);
                     }
                     // vue.previewImage('/storage/' + response);

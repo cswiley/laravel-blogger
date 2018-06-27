@@ -2,7 +2,7 @@
 
 return [
 
-    'middleware' => [
+    'middleware'        => [
         'auth'
     ],
 
@@ -15,7 +15,7 @@ return [
     | to view the Style Guide page
     |
     */
-    'prefix'       => 'blog',
+    'prefix'            => 'blog',
 
     /*
    |--------------------------------------------------------------------------
@@ -26,7 +26,8 @@ return [
    |
    |
    */
-    'storage_disk' => 'public',
+    'storage_disk'      => 's3',
+    'storage_directory' => 'images',
 
     /*
    |--------------------------------------------------------------------------
@@ -37,17 +38,15 @@ return [
    |
    |
    */
-    'assets_path'  => '/vendor/cswiley/blogger/assets',
-
-
-    'view_path'  => 'views/vendor/blogger',
+    'assets_path'       => '/vendor/cswiley/blogger/assets',
+    'view_path'         => '/vendor/blogger',
 
     /*
    |--------------------------------------------------------------------------
    | Admin section home
    |--------------------------------------------------------------------------
    */
-    'admin_prefix' => 'admin',
+    'admin_prefix'      => 'admin',
 
     /*
      |--------------------------------------------------------------------------
@@ -56,7 +55,7 @@ return [
      |
      | Specify your application stylesheets to load
      */
-    'stylesheets'  => [
+    'stylesheets'       => [
         '/css/app.css',
         'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css'
     ],
@@ -68,7 +67,7 @@ return [
     |
     | Specify your application scripts to load
     */
-    'scripts'      => [
+    'scripts'           => [
         '/js/manifest.js',
         '/js/vendor.js',
         '/js/app.js',

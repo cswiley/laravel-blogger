@@ -4,6 +4,8 @@ namespace Cswiley\Blogger\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use ParentIterator;
 
 class Blog extends Model
 {
@@ -54,6 +56,17 @@ class Blog extends Model
     static public function activeBlogs()
     {
         return self::whereDate('published_at', '<', Carbon::now())->where('visibility', self::VISIBILITY_PUBLIC);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            if (Storage::disk(config('blogger.storage_disk'))->exists($this->image)) {
+                return Storage::disk(config('blogger.storage_disk'))->url($this->image);
+            }
+        }
+
+        return '';
     }
 
 }

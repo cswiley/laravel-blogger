@@ -1,4 +1,4 @@
-@extends('blog::layouts.site', ['bodyClass' => ''])
+@extends('blogger::layouts.site', ['bodyClass' => ''])
 
 @section ('content')
     <div class="row">
@@ -13,7 +13,7 @@
             </nav>
             <h1 class="display-inline-block">Edit post</h1>
             <a target="_blank" href="/blog/create" class="button hollow tiny radius margin-left-1">+ Add New</a>
-            <blog-editor data-id="<?php echo $blog->id ?>"></blog-editor>
+            <blog-editor id="<?php echo $blog->id ?>" action="{{ blog_url() }}"></blog-editor>
         </div>
     </div>
 @stop

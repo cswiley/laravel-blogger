@@ -2,6 +2,7 @@
 
 namespace Cswiley\Blogger\Resources;
 
+use Cswiley\Blogger\Models\Blog;
 use Illuminate\Http\Resources\Json\Resource;
 
 class BlogResource extends Resource
@@ -16,6 +17,7 @@ class BlogResource extends Resource
     {
         $resourceArray = parent::toArray($request);
         $resourceArray['user'] = $this->user;
+        $resourceArray['image_url'] = $this->image_url;
         return $resourceArray;
     }
 

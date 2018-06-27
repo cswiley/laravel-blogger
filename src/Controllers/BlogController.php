@@ -10,22 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function json_encode;
 use function str_replace;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
     protected $user;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-//        $this->middleware(function ($request, $next) {
-//            // ...
-//            dd(Auth::id());
-//
-//            return $next($request);
-//        });
-//        $this->middleware('auth', [
-//            'except' => ['show']
-//        ]);
+        $this->middleware('web');
+        $this->middleware(['auth'], [
+            'except' => ['show']
+        ]);
     }
 
     /**
@@ -36,8 +32,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::all();
-
-        return view('blog::index', [
+        return view('blogger::index', [
             'blogs' => $blogs
         ]);
     }
@@ -49,7 +44,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog::create', [
+        return view('blogger::create', [
             'options' => json_encode([
                 'visibility_options' => Blog::$visibilityLookup
             ])
@@ -66,9 +61,8 @@ class BlogController extends Controller
     {
         $blog               = new Blog;
         $publishedAt        = new Carbon(str_replace('@', '', $request->input('published_at')));
-        $userId             = Auth::id();
         $blog->content      = $request->input('content');
-        $blog->user_id      = $userId ?? 0;
+        $blog->user_id      = Auth::id() ?? 0;
         $blog->visibility   = $request->input('visibility', BLOG::VISIBILITY_PRIVATE);
         $blog->published_at = $publishedAt;
         $blog->image        = $request->input('image');
@@ -82,16 +76,17 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Blog $blog
+     * @param  Cswiley\Blogger\Models\Blog $blog
      * @return \Illuminate\Http\Response
      */
     public function show(Blog $blog)
     {
+
         if (!$blog->is_active && !Auth::id()) {
             abort(404, 'Blog not found');
         }
 
-        return view('blog::show', [
+        return view('blogger::show', [
             'blog' => $blog->toArray()
         ]);
     }
@@ -103,7 +98,7 @@ class BlogController extends Controller
             abort(404, 'blog not found');
         }
 
-        return view('blog::show', [
+        return view('blogger::show', [
             'blog'      => $input,
             'isPreview' => true
         ]);
@@ -112,19 +107,19 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Blog $blog
+     * @param  Cswiley\Blogger\Models\Blog $blog
      * @return \Illuminate\Http\Response
      */
     public function edit(Blog $blog)
     {
-        return view('blog::edit', ['blog' => $blog]);
+        return view('blogger::edit', ['blog' => $blog]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Blog $blog
+     * @param  Cswiley\Blogger\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Blog $blog)
@@ -143,16 +138,5 @@ class BlogController extends Controller
 
             return new BlogResource($blog);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Blog $blog
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Blog $blog)
-    {
-        //
     }
 }

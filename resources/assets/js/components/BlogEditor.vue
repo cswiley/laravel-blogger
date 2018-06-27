@@ -1,6 +1,6 @@
 <template>
     <div class="blog-editor">
-        <form method="post" action="">
+        <form method="post" action="action">
             <div class="row">
                 <div class="column small-12 medium-8">
                     <div class="blog-main">
@@ -40,7 +40,7 @@
                                 Featured Image
                             </div>
                             <div class="card-section">
-                                <image-uploader action="/api/blog-image" :path="data.image" @uploaded="imageUploaded" @deleted="imageDeleted"></image-uploader>
+                                <image-uploader action="/api/blog-image" :path="data.image" :src="data.image_url" @uploaded="imageUploaded" @deleted="imageDeleted"></image-uploader>
                             </div>
                         </div>
                     </div>
@@ -124,13 +124,17 @@
 
     export default {
         props     : {
-            'data-id'     : {
+            'id'     : {
                 type    : Number,
                 required: true,
             },
-            'data-options': {
+            'options': {
                 type   : String,
                 default: false
+            },
+            action: {
+                type: String,
+                default: ''
             }
         },
         components: {
@@ -138,10 +142,9 @@
             ImageUploader
         },
         data() {
-
             var options = {};
-            if (this.dataOptions) {
-                options = JSON.parse(this.dataOptions);
+            if (this.options) {
+                options = JSON.parse(this.options);
 
                 if (options.visibility_options) {
                     options.visibility = Object.keys(options.visibility_options)[0];
@@ -165,7 +168,7 @@
             };
         },
         mounted() {
-            fetchBlogData(this, this.dataId);
+            fetchBlogData(this, this.id);
             bindSummerNote('#summernote');
         },
         methods   : {
@@ -180,23 +183,23 @@
             preview      : function () {
                 var formData     = this.data;
                 formData.content = $('#summernote').summernote('code');
-                openWindowWithPost('/blog/preview/' + this.data.id, 'target', formData);
+                openWindowWithPost(this.action + '/preview/' + this.id, 'target', formData);
             },
             save         : function () {
                 var vue      = this,
                     formData = Vue.util.extend({}, vue.data),
-                    url      = '/blog';
+                    url      = this.action;
 
                 formData.content = $('#summernote').summernote('code');
 
-                if (vue.data.id) {
-                    url                 = '/blog/' + vue.data.id;
+                if (vue.id) {
+                    url                 = vue.action + '/' + vue.id;
                     formData['_method'] = 'PUT';
                 }
 
                 $.post(url, formData, function (response) {
-                    if (!vue.data.id) {
-                        location.href = '/blog/' + response.data.id + '/edit';
+                    if (!vue.id) {
+                        location.href = vue.action + '/' + response.data.id + '/edit';
                     }
                     showNotification(vue, 'Post saved!', 3000);
                 });

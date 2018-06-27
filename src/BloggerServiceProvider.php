@@ -53,7 +53,7 @@ class BloggerServiceProvider extends ServiceProvider
     public function loadConfig()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/publishable/config/blog.php', 'blogger'
+            dirname(__DIR__) . '/publishable/config/blogger.php', 'blogger'
         );
     }
 
@@ -64,7 +64,7 @@ class BloggerServiceProvider extends ServiceProvider
 
     private function registerController()
     {
-        $this->app->make('Cswiley\Blogger\Controllers\BlogController');
+//        $this->app->make('Cswiley\Blogger\Controllers\BlogController');
     }
 
     private function loadViews()
@@ -82,10 +82,10 @@ class BloggerServiceProvider extends ServiceProvider
                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
            ],
            'config' => [
-               "{$publishablePath}/config/blog.php" => config_path('blogger.php'),
+               "{$publishablePath}/config/blogger.php" => config_path('blogger.php'),
            ],
            'views' => [
-              "{$resourcePath}/views"  => resource_path(config('blogger.view_path')),
+              "{$resourcePath}/views"  => resource_path('views' . config('blogger.view_path')),
            ],
            'js' => [
                "{$resourcePath}/assets/js"  => resource_path('assets' . config('blogger.assets_path') . '/js'),
