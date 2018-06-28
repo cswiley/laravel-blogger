@@ -8,28 +8,38 @@ if (!function_exists('blog_assets')) {
     }
 }
 
+if (! function_exists('path_builder')) {
+    function path_builder($path)
+    {
+        return preg_replace('/\/[\/]+/g', '/', implode('/', $path));
+    }
+
+}
+
 if (!function_exists('blog_path')) {
     function blog_path($path = '')
     {
-        $base = '/' . config('blogger.route');
+        $base = ['/'];
+        $base[] = config('blogger.route');
 
         if (! empty($path)) {
-            $base = $base . '/' . ltrim($path, '/');
+            $base[] = $path;
         }
 
-        return $base;
+        return path_builder($base);
     }
 }
 
 if (!function_exists('blog_url')) {
     function blog_url($path = '')
     {
-        $base = '/' . config('blogger.route');
+        $base = ['/'];
+        $base[] = config('blogger.route');
 
         if (!empty($path)) {
-            $base = $base . '/' . ltrim($path, '/');
+            $base[] = $path;
         }
 
-        return url($base);
+        return url(path_builder($base));
     }
 }
