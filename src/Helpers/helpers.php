@@ -11,7 +11,7 @@ if (!function_exists('blog_assets')) {
 if (! function_exists('path_builder')) {
     function path_builder($path)
     {
-        return preg_replace('/\/[\/]+/g', '/', implode('/', $path));
+        return preg_replace('/\/[\/]+/', '/', implode('/', $path));
     }
 
 }
