@@ -1,27 +1,29 @@
 {
-    "name": "cswiley/laravel-blogger",
-    "description": "Laravel blog package",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
+    "name"              : "cswiley/laravel-blogger",
+    "description"       : "Laravel blog package",
+    "type"              : "library",
+    "license"           : "MIT",
+    "authors"           : [
         {
-            "name": "cameron wiley",
-            "email": "cswiley@gmail.com"
+            "name"  : "cameron wiley",
+            "email" : "cswiley@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {
-        "php"                                 : ">=7.0.0",
-        "laravel/framework"                   : "5.5.*",
-        "laravel/tinker"                      : "~1.0",
-        "laravelcollective/html"              : "^5.5"
+    "minimum-stability" : "dev",
+    "require"           : {
+        "php"                        : ">=7.0.0",
+        "laravel/framework"          : "5.5.*",
+        "laravel/tinker"             : "~1.0",
+        "laravelcollective/html"     : "^5.5",
+        "league/flysystem-aws-s3-v3" : "~1.0",
+        "zizaco/entrust"             : "^1.9"
     },
-    "autoload" : {
+    "autoload"          : {
         "psr-4" : {
             "Cswiley\\Blogger\\" : "src"
         }
     },
-    "extra" : {
+    "extra"             : {
         "laravel" : {
             "providers" : [
                 "Cswiley\\Blogger\\BloggerServiceProvider"

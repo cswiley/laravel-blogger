@@ -15,8 +15,8 @@
             <tr v-for="post in posts">
                 <td>
                     {{ post.title}}
-                    (<a target="_blank" v-bind:href="'/blog/' + post.id + '/edit'">edit</a>
-                    | <a target="_blank" v-bind:href="'/blog/' + post.id">view</a>)
+                    (<a target="_blank" v-bind:href="url + '/' + post.id + '/edit'">edit</a>
+                    | <a target="_blank" v-bind:href="url + '/' + post.id">view</a>)
                 </td>
                 <td>{{ post.user_id }}</td>
                 <td>{{ post.visibility_eng }}</td>
@@ -33,15 +33,20 @@
 
     // var moment = require('moment-timezone');
 
-    function fetchBlogData() {
-        return $.get('/api/blog', function (response) {
+    function fetchBlogData(vue) {
+        return $.get('/api' + vue.url, function (response) {
             vue.meta = response.meta;
             vue.posts = response.data;
         });
     }
 
     export default {
-        props     : [],
+        props     : {
+            url: {
+                type: String,
+                default: ''
+            }
+        },
         components: {},
         data() {
             vue = this;
@@ -51,7 +56,7 @@
             };
         },
         mounted() {
-            fetchBlogData();
+            fetchBlogData(this);
         },
         methods   : {}
     };

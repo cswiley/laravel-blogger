@@ -3,8 +3,16 @@
 @section ('content')
     <div class="row">
         <div class="column small-12">
-            <h1>Add new post</h1>
-            <blog-editor options="{{ $options }}" action="{{ blog_url() }}"></blog-editor>
+            <nav aria-label="You are here:" role="navigation">
+                <ul class="breadcrumbs">
+                    <li><a href="{{ blog_path() }}">{{ config('blogger.title_plural') }}</a></li>
+                    <li>
+                        <span class="show-for-sr">Current: </span> New {{ config('blogger.title') }}
+                    </li>
+                </ul>
+            </nav>
+            <h1>Add new {{ config('blogger.title') }}</h1>
+            <blog-editor options="{{ $options }}" action="{{ blog_path() }}"></blog-editor>
         </div>
     </div>
 @stop

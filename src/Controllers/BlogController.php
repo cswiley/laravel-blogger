@@ -22,6 +22,40 @@ class BlogController extends Controller
         $this->middleware(['auth'], [
             'except' => ['show']
         ]);
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+            $this->setMenu($request, $this->user);
+            return $next($request);
+        })->except('show');
+    }
+
+    private function setMenu($request, $user)
+    {
+        // @todo menu urls
+        $menu = config('blogger.menu');
+
+        $menu = array_filter($menu, function ($menu) use ($user) {
+            if ($user->hasRole('admin')) {
+                return true;
+            }
+
+            return empty($menu['role']) || $menu['role'] === 'manager';
+
+        });
+
+        $url     = $request->segment(1);
+        $pattern = !empty($url) ? "/$url/" : false;
+        $menu    = array_map(function ($n) use ($pattern) {
+            $n['active'] = false;
+            if ($pattern !== false && preg_match($pattern, $n['url'])) {
+                $n['active'] = true;
+            }
+
+            return $n;
+        }, $menu);
+
+        view()->share('userAccount', $user->toArray());
+        view()->share('menu', $menu);
     }
 
     /**
@@ -31,10 +65,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::all();
-        return view('blogger::index', [
-            'blogs' => $blogs
-        ]);
+        return view('blogger::index');
     }
 
     /**
@@ -81,7 +112,6 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-
         if (!$blog->is_active && !Auth::id()) {
             abort(404, 'Blog not found');
         }

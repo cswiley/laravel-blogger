@@ -5,6 +5,9 @@
                 <div class="column small-12 medium-8">
                     <div class="blog-main">
                         <input name="title" v-model="data.title" type="text" placeholder="Enter title here"/>
+                        <div v-if="id">
+                            Permalink: <a target="_blank" :href="permalink">{{permalink}}</a>
+                        </div>
                         <div id="summernote"></div>
                     </div>
                 </div>
@@ -40,7 +43,8 @@
                                 Featured Image
                             </div>
                             <div class="card-section">
-                                <image-uploader action="/api/blog-image" :path="data.image" :src="data.image_url" @uploaded="imageUploaded" @deleted="imageDeleted"></image-uploader>
+                                <image-uploader :action="api + '-image'" :path="data.image" :src="data.image_url" @uploaded="imageUploaded"
+                                                @deleted="imageDeleted"></image-uploader>
                             </div>
                         </div>
                     </div>
@@ -59,8 +63,12 @@
     import 'flatpickr/dist/flatpickr.css';
     import ImageUploader from './ImageUploader';
 
-    let moment = require('moment-timezone');
-    require('summernote/dist/summernote-lite');
+    import moment from 'moment-timezone';
+    import 'codemirror/lib/codemirror.css';
+    import 'codemirror';
+    import 'summernote/dist/font/summernote.woff';
+    import 'summernote/dist/summernote-lite.css';
+    import 'summernote/dist/summernote-lite';
 
     function bindSummerNote(selector, opts) {
         var defaults = {
@@ -104,13 +112,17 @@
         }
     }
 
+    function buildPath(args) {
+        var removeSlashRepeatsPattern = /\/[\/]+/g;
+        return args.join('/').replace(removeSlashRepeatsPattern, '/');
+    }
 
     function fetchBlogData(vue, id) {
         if (!id) {
             return false;
         }
 
-        return $.get('/api/blog/' + id, function (response) {
+        return $.get(buildPath(['/api', vue.action, id]), function (response) {
             vue.data = response.data;
             vue.meta = response.meta || {};
             if (vue.meta.visibility_options) {
@@ -132,8 +144,12 @@
                 type   : String,
                 default: false
             },
-            action: {
-                type: String,
+            action   : {
+                type   : String,
+                default: ''
+            },
+            url      : {
+                type   : String,
                 default: ''
             }
         },
@@ -155,7 +171,7 @@
                 data               : {
                     published_at      : moment().format('MMM D, YYYY @ h:mma'),
                     visibility_options: options.visibility_options || {},
-                    visibility: options.visibility || ''
+                    visibility        : options.visibility || ''
                 },
                 config             : {
                     enableTime: true,
@@ -170,6 +186,14 @@
         mounted() {
             fetchBlogData(this, this.id);
             bindSummerNote('#summernote');
+        },
+        computed  : {
+            permalink: function () {
+                return this.url + '/' + this.id;
+            },
+            api: function () {
+                return buildPath(['/api', this.action]);
+            }
         },
         methods   : {
             imageUploaded: function (path) {

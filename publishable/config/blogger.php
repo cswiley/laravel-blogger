@@ -11,11 +11,17 @@ return [
     | The route prefix you wish to use with your blogging installation
     |--------------------------------------------------------------------------
     |
-    | specify the domain prefix you would like your users to visit in order
-    | to view the Style Guide page
-    |
     */
-    'prefix'            => 'blog',
+    'route'             => 'blog',
+
+    /*
+     |--------------------------------------------------------------------------
+     | Resource Page Titles
+     |--------------------------------------------------------------------------
+     |
+     */
+    'title'             => 'post',
+    'title_plural'      => 'posts',
 
     /*
    |--------------------------------------------------------------------------
@@ -29,12 +35,12 @@ return [
     'storage_disk'      => 's3',
     'storage_directory' => 'images',
 
-    /*
+   /*
    |--------------------------------------------------------------------------
    | Asset path location
    |--------------------------------------------------------------------------
    |
-   | specify the published asset path location
+   | Specify the published asset path location
    |
    |
    */
@@ -42,11 +48,12 @@ return [
     'view_path'         => '/vendor/blogger',
 
     /*
-   |--------------------------------------------------------------------------
-   | Admin section home
-   |--------------------------------------------------------------------------
-   */
-    'admin_prefix'      => 'admin',
+     |--------------------------------------------------------------------------
+     | Admin Menu Links
+     |--------------------------------------------------------------------------
+     |
+     */
+    'menu'        => [],
 
     /*
      |--------------------------------------------------------------------------
@@ -55,9 +62,8 @@ return [
      |
      | Specify your application stylesheets to load
      */
-    'stylesheets'       => [
+    'stylesheets' => [
         '/css/app.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css'
     ],
 
     /*
@@ -67,10 +73,9 @@ return [
     |
     | Specify your application scripts to load
     */
-    'scripts'           => [
+    'scripts'     => [
         '/js/manifest.js',
         '/js/vendor.js',
         '/js/app.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js'
     ]
 ];

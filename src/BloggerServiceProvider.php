@@ -14,9 +14,7 @@ class BloggerServiceProvider extends ServiceProvider
     public function boot()
     {
 //        $this->loadMigrations();
-        $this->loadRoutes();
-        $this->loadConfig();
-        $this->loadViews();
+        $this->registerPublish();
     }
 
     /**
@@ -32,8 +30,10 @@ class BloggerServiceProvider extends ServiceProvider
 //        });
 
         $this->loadHelpers();
-        $this->registerController();
-        $this->registerPublish();
+        $this->loadRoutes();
+        $this->loadConfig();
+        $this->loadViews();
+//        $this->loadController();
 
     }
 
@@ -62,7 +62,7 @@ class BloggerServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
 
-    private function registerController()
+    private function loadController()
     {
 //        $this->app->make('Cswiley\Blogger\Controllers\BlogController');
     }
@@ -95,6 +95,9 @@ class BloggerServiceProvider extends ServiceProvider
            ],
            'migrations' => [
                "{$publishablePath}/migrations/" => database_path('migrations')
+           ],
+           'fonts' => [
+               dirname(__DIR__) . '/fonts' => public_path('/fonts/')
            ]
 
         ];
