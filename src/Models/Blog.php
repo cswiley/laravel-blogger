@@ -60,13 +60,15 @@ class Blog extends Model
 
     public function getImageUrlAttribute()
     {
+        $imageUrl = '';
+
         if ($this->image) {
             if (Storage::disk(config('blogger.storage_disk'))->exists($this->image)) {
-                return Storage::disk(config('blogger.storage_disk'))->url($this->image);
+                $imageUrl = Storage::disk(config('blogger.storage_disk'))->url($this->image);
             }
         }
 
-        return '';
+        return $this->attributes['image_url'] = $imageUrl;
     }
 
 }
