@@ -67,12 +67,7 @@ class Blog extends Model
 
     static public function idOrSlug($value)
     {
-        $blog = Blog::where('id', $value)->first();
-        if (empty($blog)) {
-            $blog = Blog::where('slug', $value)->first();
-        }
-
-        return $blog;
+        return self::where('id', $value)->orWhere('slug', $value);
     }
 
     static public function onlyActive()
