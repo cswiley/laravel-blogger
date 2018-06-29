@@ -25,7 +25,10 @@ class Blog extends Model
     ];
 
     protected $appends = [
-        'visibility_eng'
+        'visibility_eng',
+        'is_public',
+        'is_active',
+        'image_url',
     ];
 
     static public $visibilityLookup = [
