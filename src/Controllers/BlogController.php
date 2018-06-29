@@ -111,12 +111,9 @@ class BlogController extends Controller
      * @param  String|Id $blogIdOrName
      * @return \Illuminate\Http\Response
      */
-    public function show($blogIdorName)
+    public function show($idOrSlug)
     {
-        $blog = Blog::where('id', $blogIdorName)->first();
-        if (empty($blog)) {
-            $blog = Blog::where('slug', $blogIdorName)->first();
-        }
+        $blog = Blog::idOrSlug($idOrSlug)->first();
         if (empty($blog)) {
             abort(404, 'Blog not found');
         }
