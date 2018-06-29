@@ -20,8 +20,8 @@
                 </div>
             @endif
 
-            @if (! empty($blog['image']))
-                <img src="{{ $blog['image'] }}" alt="">
+            @if (! empty($blog['image_url']))
+                <img src="{{ $blog['image_url'] }}" alt="">
             @endif
             <h1>{{ $blog['title'] }}</h1>
 
