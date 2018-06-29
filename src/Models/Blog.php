@@ -65,7 +65,17 @@ class Blog extends Model
         $this->attributes['slug'] = strtolower($slug);
     }
 
-    static public function activeBlogs()
+    static public function idOrSlug($value)
+    {
+        $blog = Blog::where('id', $value)->first();
+        if (empty($blog)) {
+            $blog = Blog::where('slug', $value)->first();
+        }
+
+        return $blog;
+    }
+
+    static public function onlyActive()
     {
         return self::whereDate('published_at', '<', Carbon::now())->where('visibility', self::VISIBILITY_PUBLIC);
     }
