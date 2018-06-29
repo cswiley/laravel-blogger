@@ -25,6 +25,7 @@ class BlogController extends Controller
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->setMenu($request, $this->user);
+
             return $next($request);
         })->except('show');
     }
@@ -97,8 +98,8 @@ class BlogController extends Controller
         $blog->visibility   = $request->input('visibility', BLOG::VISIBILITY_PRIVATE);
         $blog->published_at = $publishedAt;
         $blog->image        = $request->input('image');
-        $blog->slug         = str_replace(' ', '-', $request->input('title', ''));
         $blog->title        = $request->input('title');
+        $blog->slug         = $blog->title;
         $blog->save();
 
         return new BlogResource($blog);
@@ -107,11 +108,19 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Cswiley\Blogger\Models\Blog $blog
+     * @param  String|Id $blogIdOrName
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show($blogIdorName)
     {
+        $blog = Blog::where('id', $blogIdorName)->first();
+        if (empty($blog)) {
+            $blog = Blog::where('slug', $blogIdorName)->first();
+        }
+        if (empty($blog)) {
+            abort(404, 'Blog not found');
+        }
+
         if (!$blog->is_active && !Auth::id()) {
             abort(404, 'Blog not found');
         }
@@ -149,7 +158,7 @@ class BlogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Cswiley\Blogger\Models\Blog  $blog
+     * @param  Cswiley\Blogger\Models\Blog $blog
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Blog $blog)
@@ -160,10 +169,8 @@ class BlogController extends Controller
             $blog->visibility   = $request->input('visibility', BLOG::VISIBILITY_PRIVATE);
             $blog->published_at = $publishedAt;
             $blog->title        = $request->input('title');
+            $blog->slug         = $blog->title;
             $blog->image        = $request->input('image');
-            if ($request->input('slug')) {
-                $blog->slug = $request->input('slug');
-            }
             $blog->save();
 
             return new BlogResource($blog);

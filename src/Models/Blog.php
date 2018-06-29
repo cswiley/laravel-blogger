@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use ParentIterator;
+use function preg_replace;
 
 class Blog extends Model
 {
@@ -33,7 +34,7 @@ class Blog extends Model
 
     static public $visibilityLookup = [
         self::VISIBILITY_PRIVATE => 'private',
-        self::VISIBILITY_PUBLIC => 'public',
+        self::VISIBILITY_PUBLIC  => 'public',
     ];
 
     public function getVisibilityEngAttribute()
@@ -48,12 +49,17 @@ class Blog extends Model
 
     public function getIsActiveAttribute()
     {
-        return $this->attributes['is_active'] =  ($this->published_at < Carbon::now()) && $this->is_public;
+        return $this->attributes['is_active'] = ($this->published_at < Carbon::now()) && $this->is_public;
     }
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = preg_replace('/[\ ]+/', '-', trim($value));
     }
 
     static public function activeBlogs()

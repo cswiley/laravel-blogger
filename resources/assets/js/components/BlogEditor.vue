@@ -189,7 +189,7 @@
         },
         computed  : {
             permalink: function () {
-                return this.url + '/' + this.id;
+                return this.url + '/' + this.data.slug;
             },
             api: function () {
                 return buildPath(['/api', this.action]);
@@ -222,6 +222,7 @@
                 }
 
                 $.post(url, formData, function (response) {
+                    vue.data = response.data;
                     if (!vue.id) {
                         location.href = vue.action + '/' + response.data.id + '/edit';
                     }
