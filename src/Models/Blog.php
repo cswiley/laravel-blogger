@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use ParentIterator;
 use function preg_replace;
+use function rtrim;
 
 class Blog extends Model
 {
@@ -59,7 +60,9 @@ class Blog extends Model
 
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = preg_replace('/[\ ]+/', '-', trim($value));
+        $slug = preg_replace('/[\ \$\-\_\.\+\!\*\'\?)(}{]/', '-', trim($value));
+        $slug = rtrim(ltrim($slug, '-'), '-');
+        $this->attributes['slug'] = strtolower($slug);
     }
 
     static public function activeBlogs()
