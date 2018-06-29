@@ -5,6 +5,7 @@ namespace Cswiley\Blogger\Controllers;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Cswiley\Blogger\Models\Blog;
+use Cswiley\Blogger\Repositories\BlogRepository;
 use Cswiley\Blogger\Resources\BlogResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -109,11 +110,12 @@ class BlogController extends Controller
      * Display the specified resource.
      *
      * @param  String|Id $blogIdOrName
+     * @param BlogRepository $blogRepository
      * @return \Illuminate\Http\Response
      */
-    public function show($idOrSlug)
+    public function show($idOrSlug, BlogRepository $blogRepository)
     {
-        $blog = Blog::idOrSlug($idOrSlug)->first();
+        $blog = $blogRepository->idOrSlug($idOrSlug)->execute()->first();
         if (empty($blog)) {
             abort(404, 'Blog not found');
         }

@@ -72,7 +72,7 @@ class Blog extends Model
 
     static public function onlyActive()
     {
-        return self::whereDate('published_at', '<', Carbon::now())->where('visibility', self::VISIBILITY_PUBLIC);
+        return self::where('published_at', '<', Carbon::now())->where('visibility', self::VISIBILITY_PUBLIC);
     }
 
     public function getImageUrlAttribute()
