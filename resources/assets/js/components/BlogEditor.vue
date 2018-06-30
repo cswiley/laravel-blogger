@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="publish-option">
                                     Publish: <span class="font-bold">{{data.published_at}}</span>
-                                    <flat-pickr :config="config" v-model="data.published_at"></flat-pickr>
+                                    <flat-pickr @on-change="dateChange" ref="flat" :config="config" v-model="data.published_at"></flat-pickr>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
             if (vue.meta.visibility_options) {
                 vue.data.visibility_options = vue.meta.visibility_options;
             }
-            vue.data.published_at = moment.utc(vue.data.published_at).toDate();
+            // vue.data.published_at = moment.utc(vue.data.published_at).toDate();
             vue.previewEnabled    = true;
             $('#summernote').summernote('code', response.data.content || '');
         });
@@ -193,9 +193,17 @@
             },
             api: function () {
                 return buildPath(['/api', this.action]);
+            },
+        },
+        watch: {
+            data: function (newVal) {
+                this.data.published_at = moment.utc(newVal.published_at).toDate();
             }
         },
         methods   : {
+            dateChange: function (selectedDates, dateStr, instance) {
+                this.datePublished = selectedDates[0].toISOString();
+            },
             imageUploaded: function (path) {
                 this.data.image = path;
                 this.save();
@@ -214,6 +222,7 @@
                     formData = Vue.util.extend({}, vue.data),
                     url      = this.action;
 
+                formData.published_at = this.datePublished;
                 formData.content = $('#summernote').summernote('code');
 
                 if (vue.id) {
@@ -222,7 +231,6 @@
                 }
 
                 $.post(url, formData, function (response) {
-                    vue.data = response.data;
                     if (!vue.id) {
                         location.href = vue.action + '/' + response.data.id + '/edit';
                     }

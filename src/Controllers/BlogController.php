@@ -163,10 +163,9 @@ class BlogController extends Controller
     public function update(Request $request, Blog $blog)
     {
         if (!empty($blog)) {
-            $publishedAt        = new Carbon(str_replace('@', '', $request->input('published_at')));
             $blog->content      = $request->input('content');
             $blog->visibility   = $request->input('visibility', BLOG::VISIBILITY_PRIVATE);
-            $blog->published_at = $publishedAt;
+            $blog->published_at = new Carbon($request->input('published_at'));
             $blog->title        = $request->input('title');
             $blog->slug         = $blog->title;
             $blog->image        = $request->input('image');
