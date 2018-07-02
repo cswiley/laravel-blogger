@@ -1,6 +1,6 @@
 <?php
 
-$route = config('blogger.route');
+$route = config('blogger.admin_route');
 
 Route::delete("api/{$route}-image", '\Cswiley\Blogger\Controllers\API\BlogImageController@delete');
 Route::resource("api/{$route}-image", '\Cswiley\Blogger\Controllers\API\BlogImageController')->only([
