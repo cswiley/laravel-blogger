@@ -1,10 +1,10 @@
 @extends('blogger::layouts.base')
 
 @section('main')
-    <div class="fixed-header bg-primary">
+    <div class="fixed-header">
         @include('blogger::partials.menu')
     </div>
-    <div class="content margin-vertical-1">
+    <div class="content">
         @yield('content')
     </div>
 
