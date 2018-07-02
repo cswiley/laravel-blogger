@@ -30,11 +30,25 @@ if (!function_exists('blog_path')) {
     }
 }
 
+if (!function_exists('blog_admin_url')) {
+    function blog_admin_url($path = '')
+    {
+        $base = ['/'];
+        $base[] = config('blogger.admin_route');
+
+        if (!empty($path)) {
+            $base[] = $path;
+        }
+
+        return url(path_builder($base));
+    }
+}
+
 if (!function_exists('blog_url')) {
     function blog_url($path = '')
     {
-        $base = ['/'];
-        $base[] = config('blogger.route');
+        $base   = ['/'];
+        $base[] = config('blogger.public_route');
 
         if (!empty($path)) {
             $base[] = $path;
