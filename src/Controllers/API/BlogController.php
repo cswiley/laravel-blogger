@@ -1,6 +1,7 @@
 <?php namespace Cswiley\Blogger\Controllers\API;
 
 use Cswiley\Blogger\Models\Blog;
+use Cswiley\Blogger\Repositories\BlogRepository;
 use Cswiley\Blogger\Resources\BlogCollection;
 use Cswiley\Blogger\Resources\BlogResource;
 use Illuminate\Http\Request;
@@ -30,11 +31,13 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string|int  $idOrSlug
+     * @params Cswiley\Blogger\Repositories\BlogRepository $blogRepository
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show($idOrSlug, BlogRepository $blogRepository)
     {
+        $blog = $blogRepository->idOrSlug($idOrSlug)->execute()->first();
         if (! empty($blog)) {
             return new BlogResource($blog);
         }

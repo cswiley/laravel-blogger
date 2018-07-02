@@ -19,7 +19,8 @@ class BlogController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->middleware(['web', 'auth']);
+        $this->middleware('web');
+        $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->setMenu($request, $this->user);
@@ -141,12 +142,16 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Cswiley\Blogger\Models\Blog $blog
+     * @param  string|int $idOrSlug
+     * @params Cswiley\Blogger\Repositories\BlogRepository $blogRepository
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit($idOrSlug, BlogRepository $blogRepository)
     {
-        return view('blogger::edit', ['blog' => $blog]);
+        $blog = $blogRepository->idOrSlug($idOrSlug)->execute()->first();
+        if (!empty($blog)) {
+            return view('blogger::edit', ['blog' => $blog]);
+        }
     }
 
     /**
@@ -156,8 +161,9 @@ class BlogController extends Controller
      * @param  Cswiley\Blogger\Models\Blog $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request, $idOrSlug, BlogRepository $blogRepository)
     {
+        $blog = $blogRepository->idOrSlug($idOrSlug)->execute()->first();
         if (!empty($blog)) {
             $blog->content      = $request->input('content');
             $blog->visibility   = $request->input('visibility', BLOG::VISIBILITY_PRIVATE);
