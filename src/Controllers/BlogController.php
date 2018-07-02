@@ -24,7 +24,7 @@ class BlogController extends Controller
             $this->user = Auth::user();
             $this->setMenu($request, $this->user);
             return $next($request);
-        })->except('show');
+        });
     }
 
     private function setMenu($request, $user)
