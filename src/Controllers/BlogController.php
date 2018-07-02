@@ -19,14 +19,10 @@ class BlogController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->middleware('web');
-        $this->middleware(['auth'], [
-            'except' => ['show']
-        ]);
+        $this->middleware(['web', 'auth']);
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->setMenu($request, $this->user);
-
             return $next($request);
         })->except('show');
     }
@@ -120,9 +116,9 @@ class BlogController extends Controller
             abort(404, 'Blog not found');
         }
 
-        if (!$blog->is_active && !Auth::id()) {
-            abort(404, 'Blog not found');
-        }
+//        if (!$blog->is_active && !Auth::id()) {
+//            abort(404, 'Blog not found');
+//        }
 
         return view('blogger::show', [
             'blog' => $blog->toArray()
