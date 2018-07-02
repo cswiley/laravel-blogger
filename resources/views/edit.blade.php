@@ -16,7 +16,7 @@
             </nav>
             <div class="blog-header">
                 <h1 class="display-inline-block">Edit {{ config('blogger.title') }}</h1>
-                <a target="_blank" href="{{ blog_admin_url('create') }}" class="button hollow tiny radius margin-left-1">+ Add New</a>
+                <a target="_blank" href="{{ blog_admin_path('create') }}" class="button hollow tiny radius margin-left-1">+ Add New</a>
             </div>
             <div class="blog-permalink margin-bottom-1">
             </div>
