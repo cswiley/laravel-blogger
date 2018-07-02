@@ -5,7 +5,7 @@
         <div class="column small-12">
             <nav aria-label="You are here:" role="navigation">
                 <ul class="breadcrumbs">
-                    <li><a href="{{ blog_path() }}">All {{ config('blogger.title_plural') }}</a></li>
+                    <li><a href="{{ blog_admin_path() }}">All {{ config('blogger.title_plural') }}</a></li>
                     <li>
                         <span class="show-for-sr">Current:</span> {{ $blog->id }}
                         <?php if ($blog->title) : ?>
@@ -20,7 +20,7 @@
             </div>
             <div class="blog-permalink margin-bottom-1">
             </div>
-            <blog-editor id="<?php echo $blog->id ?>" action="{{ blog_path() }}" url="{{ blog_url() }}"></blog-editor>
+            <blog-editor id="<?php echo $blog->id ?>" action="{{ blog_admin_path() }}" url="{{ blog_public_path() }}"></blog-editor>
         </div>
     </div>
 @stop

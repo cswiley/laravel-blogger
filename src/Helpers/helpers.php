@@ -16,11 +16,11 @@ if (! function_exists('path_builder')) {
 
 }
 
-if (!function_exists('blog_path')) {
-    function blog_path($path = '')
+if (!function_exists('blog_admin_path')) {
+    function blog_admin_path($path = '')
     {
         $base = ['/'];
-        $base[] = config('blogger.route');
+        $base[] = config('blogger.admin_route');
 
         if (! empty($path)) {
             $base[] = $path;
@@ -30,22 +30,8 @@ if (!function_exists('blog_path')) {
     }
 }
 
-if (!function_exists('blog_admin_url')) {
-    function blog_admin_url($path = '')
-    {
-        $base = ['/'];
-        $base[] = config('blogger.admin_route');
-
-        if (!empty($path)) {
-            $base[] = $path;
-        }
-
-        return url(path_builder($base));
-    }
-}
-
-if (!function_exists('blog_url')) {
-    function blog_url($path = '')
+if (!function_exists('blog_public_path')) {
+    function blog_public_path($path = '')
     {
         $base   = ['/'];
         $base[] = config('blogger.public_route');
