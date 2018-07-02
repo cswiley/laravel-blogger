@@ -15,7 +15,7 @@
             <tr v-for="post in posts">
                 <td>
                     {{ post.title}}
-                    (<a target="_blank" v-bind:href="url + '/' + post.id + '/edit'">edit</a>
+                    (<a v-bind:href="url + '/' + post.id + '/edit'">edit</a>
                     | <a target="_blank" v-bind:href="url + '/' + post.id">view</a>)
                 </td>
                 <td>{{ post.user_id }}</td>
