@@ -73,7 +73,7 @@
     function bindSummerNote(selector, opts) {
         var defaults = {
             tabsize: 2,
-            height : 300
+            height : 600
         };
         $(selector).summernote($.extend({}, defaults, opts || {}));
     }
