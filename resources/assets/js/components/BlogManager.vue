@@ -18,8 +18,8 @@
                     | <a target="_blank" :href="url + '/' + row.id">view</a>)
                 </td>
                 <td>{{ row.visibility_eng }}</td>
-                <td>{{ row.published_at }}</td>
-                <td>{{ row.updated_at }}</td>
+                <td>{{ formatDate(row.published_at) }}</td>
+                <td>{{ formatDate(row.updated_at) }}</td>
             </tr>
             </tbody>
         </table>
@@ -35,16 +35,12 @@
 
 <script>
     import URLSearchParams from 'url-search-params';
+    import moment from 'moment-timezone';
 
     function fetchBlogData(vue) {
         return $.get('/api' + vue.url, function (response) {
-            let page;
             vue.meta = response.meta;
             vue.data = response.data;
-
-            if (vue.params.has('page')) {
-
-            }
             vue.page = vue.params.has('page') ? vue.params.get('page') : 1
         });
     }
@@ -97,6 +93,10 @@
 
         },
         methods   : {
+            formatDate: function (dateStr, format) {
+                format = format || 'MM/DD/YYYY';
+                return moment(dateStr).format(format)
+            },
             updateHash: function () {
                 location.hash = this.params.toString();
             },
