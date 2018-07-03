@@ -5,12 +5,12 @@
             <tr>
                 <th><a href="#" @click.prevent="sortCol('title')">Title</a></th>
                 <th><a href="#" @click.prevent="sortCol('visibility_eng')">Visibility</a></th>
+                <th>Image</th>
                 <th><a href="#" @click.prevent="sortCol('published_at')">Published</a></th>
                 <th><a href="#" @click.prevent="sortCol('updated_at')">Updated</a></th>
             </tr>
             </thead>
             <tbody>
-
             <tr v-for="row in rows">
                 <td>
                     {{ row.title}}
@@ -18,6 +18,9 @@
                     | <a target="_blank" :href="url + '/' + row.id">view</a>)
                 </td>
                 <td>{{ row.visibility_eng }}</td>
+                <td>
+                    <a target="_blank" :href="imageLink(row)" v-if="imageLink(row)">link</a>
+                </td>
                 <td>{{ formatDate(row.published_at) }}</td>
                 <td>{{ formatDate(row.updated_at) }}</td>
             </tr>
@@ -93,6 +96,10 @@
 
         },
         methods   : {
+            imageLink: function (row) {
+                console.log(row);
+                return row.image ? row.image_url : false
+            },
             formatDate: function (dateStr, format) {
                 format = format || 'MM/DD/YYYY';
                 return moment(dateStr).format(format)
