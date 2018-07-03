@@ -128,7 +128,7 @@
             if (vue.meta.visibility_options) {
                 vue.data.visibility_options = vue.meta.visibility_options;
             }
-            // vue.data.published_at = moment.utc(vue.data.published_at).toDate();
+            vue.data.published_at = moment.utc(vue.data.published_at).toDate();
             vue.previewEnabled    = true;
             $('#summernote').summernote('code', response.data.content || '');
         });
@@ -197,7 +197,8 @@
         },
         watch: {
             data: function (newVal) {
-                this.data.published_at = moment.utc(newVal.published_at).toDate();
+                // debugger;
+                // this.data.published_at = moment.utc(newVal.published_at).toDate();
             }
         },
         methods   : {
