@@ -125,7 +125,9 @@
                         vue.data.path = response.path;
                         vue.data.preview = response.url;
                         vue.$emit('uploaded', response.path);
+                        return;
                     }
+                    vue.$emit('error', response.error || 'unknown error occurred');
                     // vue.previewImage('/storage/' + response);
                 }, function (response) {
                     console.log(response);

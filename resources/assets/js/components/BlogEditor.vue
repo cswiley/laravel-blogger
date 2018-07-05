@@ -43,7 +43,7 @@
                                 Featured Image
                             </div>
                             <div class="card-section">
-                                <image-uploader :action="api + '-image'" :path="data.image" :src="data.image_url" @uploaded="imageUploaded"
+                                <image-uploader :action="api + '-image'" :path="data.image" :src="data.image_url" @uploaded="imageUploaded" @error="imageUploadError"
                                                 @deleted="imageDeleted"></image-uploader>
                             </div>
                         </div>
@@ -204,6 +204,9 @@
         methods   : {
             dateChange: function (selectedDates, dateStr, instance) {
                 this.datePublished = selectedDates[0].toISOString();
+            },
+            imageUploadError: function (message) {
+                showNotification(vue, message, 3000);
             },
             imageUploaded: function (path) {
                 this.data.image = path;

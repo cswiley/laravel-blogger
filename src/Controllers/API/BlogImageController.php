@@ -50,7 +50,7 @@ class BlogImageController extends Controller
             ]);
         }
 
-        return JsonResponse::jsonFail($request->file('file')->getError());
+        return JsonResponse::jsonFail($request->file('file')->getErrorMessage());
     }
 
     public function delete(Request $request)
