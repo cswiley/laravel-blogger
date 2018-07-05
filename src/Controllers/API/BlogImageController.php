@@ -28,11 +28,6 @@ class BlogImageController extends Controller
         return view('upload');
     }
 
-    protected function storageDisk()
-    {
-        return Storage::disk(config('blogger.storage_disk'));
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -42,11 +37,11 @@ class BlogImageController extends Controller
     public function store(Request $request)
     {
         if ($request->file('file')->isValid()) {
-            $path = $request->file->store(config('blogger.storage_directory'), config('blogger.storage_disk'));
+            $path = $request->file('file')->store(config('blogger.storage_disk'));
 
             return JsonResponse::jsonOk([
                 'path' => $path,
-                'url'  => $this->storageDisk()->url($path)
+                'url'  => Storage::url($path)
             ]);
         }
 
@@ -57,8 +52,8 @@ class BlogImageController extends Controller
     {
         $path = $request->input('path');
         if (!empty($path)) {
-            if ($this->storageDisk()->exists($path)) {
-                $res = $this->storageDisk()->delete($path);
+            if (Storage::exists($path)) {
+                $res = Storage::delete($path);
                 if ($res) {
                     return JsonResponse::jsonOk(['message' => 'Image removed']);
                 }

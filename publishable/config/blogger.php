@@ -12,8 +12,8 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'admin_route'             => 'blog',
-    'public_route'             => 'blog',
+    'admin_route'       => 'blog',
+    'public_route'      => 'blog',
 
     /*
      |--------------------------------------------------------------------------
@@ -33,18 +33,17 @@ return [
    |
    |
    */
-    'storage_disk'      => 's3',
     'storage_directory' => 'images',
 
-   /*
-   |--------------------------------------------------------------------------
-   | Asset path location
-   |--------------------------------------------------------------------------
-   |
-   | Specify the published asset path location
-   |
-   |
-   */
+    /*
+    |--------------------------------------------------------------------------
+    | Asset path location
+    |--------------------------------------------------------------------------
+    |
+    | Specify the published asset path location
+    |
+    |
+    */
     'assets_path'       => '/vendor/cswiley/blogger/assets',
     'view_path'         => '/vendor/blogger',
 
@@ -54,7 +53,7 @@ return [
      |--------------------------------------------------------------------------
      |
      */
-    'menu'        => [],
+    'menu'              => [],
 
     /*
      |--------------------------------------------------------------------------
@@ -63,7 +62,7 @@ return [
      |
      | Specify your application stylesheets to load
      */
-    'stylesheets' => [
+    'stylesheets'       => [
         '/css/app.css',
     ],
 
@@ -74,7 +73,7 @@ return [
     |
     | Specify your application scripts to load
     */
-    'scripts'     => [
+    'scripts'           => [
         '/js/manifest.js',
         '/js/vendor.js',
         '/js/app.js',
