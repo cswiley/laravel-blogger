@@ -78,17 +78,14 @@ class BloggerServiceProvider extends ServiceProvider
         $resourcePath    = dirname(__DIR__) . "/resources";
 
         $publishable = [
-//            'public'     => [
-//                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
-//            ],
+            'public'     => [
+                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
+            ],
             'config'     => [
                 "{$publishablePath}/config/blogger.php" => config_path('blogger.php'),
             ],
             'views'      => [
                 "{$resourcePath}/views" => resource_path('views/vendor/blogger'),
-            ],
-            'assets' => [
-                "{$resourcePath}/assets" => resource_path('assets/vendor/blogger'),
             ],
             'migrations' => [
                 "{$publishablePath}/migrations/" => database_path('migrations')
