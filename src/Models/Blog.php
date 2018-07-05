@@ -65,16 +65,6 @@ class Blog extends Model
         $this->attributes['slug'] = strtolower($slug);
     }
 
-    static public function idOrSlug($value)
-    {
-        return self::where('id', $value)->orWhere('slug', $value);
-    }
-
-    static public function onlyActive()
-    {
-        return self::where('published_at', '<', Carbon::now())->where('visibility', self::VISIBILITY_PUBLIC);
-    }
-
     public function getImageUrlAttribute()
     {
         $imageUrl = '';
