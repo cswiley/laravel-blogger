@@ -10,9 +10,9 @@
                 <div class="callout alert margin-top-1">
                     <ul>
                         @if($blog['is_active'])
-                        <li>
-                            <strong>Public URL: </strong><a href="{{ blog_public_path($blog['slug']) }}">{{ blog_public_path($blog['slug']) }}</a>
-                        </li>
+                            <li>
+                                <strong>Public URL: </strong><a href="{{ blog_public_path($blog['slug']) }}">{{ url(blog_public_path($blog['slug'])) }}</a>
+                            </li>
                         @endif
                         <li>
                             <strong>Status: </strong>{{ $blog['visibility_eng'] }}
