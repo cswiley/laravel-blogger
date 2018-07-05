@@ -78,9 +78,9 @@ class BloggerServiceProvider extends ServiceProvider
         $resourcePath    = dirname(__DIR__) . "/resources";
 
         $publishable = [
-            'public'     => [
-                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
-            ],
+//            'public'     => [
+//                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
+//            ],
             'config'     => [
                 "{$publishablePath}/config/blogger.php" => config_path('blogger.php'),
             ],
