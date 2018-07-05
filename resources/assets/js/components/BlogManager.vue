@@ -14,10 +14,17 @@
             <tr v-for="row in rows">
                 <td>
                     {{ row.title}}
-                    (<a :href="url + '/' + row.id + '/edit'">edit</a>
-                    | <a target="_blank" :href="url + '/' + row.id">view</a>)
+                    (<a :href="path + '/' + row.id + '/edit'">edit</a>
+                    | <a target="_blank" :href="path + '/' + row.id">view</a>)
                 </td>
-                <td>{{ row.visibility_eng }}</td>
+                <td>
+                    <a target="_blank" :href="permalink + '/' + row.slug" v-if="row.slug && row.visibility_eng === 'public'">
+                        {{ row.visibility_eng }}
+                    </a>
+                    <span v-else>
+                        {{ row.visibility_eng }}
+                    </span>
+                </td>
                 <td>
                     <a target="_blank" :href="imageLink(row)" v-if="imageLink(row)">link</a>
                 </td>
@@ -41,7 +48,7 @@
     import moment from 'moment-timezone';
 
     function fetchBlogData(vue) {
-        return $.get('/api' + vue.url, function (response) {
+        return $.get('/api' + vue.path, function (response) {
             vue.meta = response.meta;
             vue.data = response.data;
             vue.page = vue.params.has('page') ? vue.params.get('page') : 1
@@ -51,7 +58,11 @@
     export default {
         mixins    : {},
         props     : {
-            url: {
+            path: {
+                type   : String,
+                default: ''
+            },
+            permalink: {
                 type   : String,
                 default: ''
             },
@@ -93,11 +104,9 @@
             totalPages : function () {
                 return Math.ceil(this.data.length / this.perPage);
             }
-
         },
         methods   : {
             imageLink: function (row) {
-                console.log(row);
                 return row.image ? row.image_url : false
             },
             formatDate: function (dateStr, format) {

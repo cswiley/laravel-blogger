@@ -6,14 +6,19 @@
         <div class="column small-12">
             @if (! empty($isPreview))
                 <div class="callout alert margin-top-1">Preview mode</div>
-            @elseif (! $blog['is_active'])
+            @else
                 <div class="callout alert margin-top-1">
                     <ul>
+                        @if($blog['is_active'])
+                        <li>
+                            <strong>Public URL: </strong><a href="{{ blog_public_path($blog['slug']) }}">{{ blog_public_path($blog['slug']) }}</a>
+                        </li>
+                        @endif
                         <li>
                             <strong>Status: </strong>{{ $blog['visibility_eng'] }}
                         </li>
                         <li>
-                            <strong>Publish at: </strong>{{ $blog['published_at'] }}
+                            <strong>Published at: </strong>{{ $blog['published_at'] }}
                         </li>
                     </ul>
 
