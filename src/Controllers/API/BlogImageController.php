@@ -50,7 +50,7 @@ class BlogImageController extends Controller
             ]);
         }
 
-        return JsonResponse::jsonFail('Unable to store image');
+        return JsonResponse::jsonFail($request->file('file')->getError());
     }
 
     public function delete(Request $request)
