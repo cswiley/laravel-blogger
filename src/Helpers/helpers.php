@@ -40,6 +40,6 @@ if (!function_exists('blog_public_path')) {
             $base[] = $path;
         }
 
-        return url(path_builder($base));
+        return path_builder($base);
     }
 }
