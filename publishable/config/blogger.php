@@ -33,6 +33,7 @@ return [
    |
    |
    */
+    'storage_disk'      => env('FILESYSTEM_BLOG_DISK', 'local'),
     'storage_directory' => 'images',
 
     /*
