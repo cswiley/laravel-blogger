@@ -206,7 +206,7 @@
                 this.datePublished = selectedDates[0].toISOString();
             },
             imageUploadError: function (message) {
-                showNotification(vue, message, 3000);
+                showNotification(this, message, 3000);
             },
             imageUploaded: function (path) {
                 this.data.image = path;

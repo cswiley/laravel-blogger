@@ -75,30 +75,27 @@ class BloggerServiceProvider extends ServiceProvider
     private function registerPublish()
     {
         $publishablePath = dirname(__DIR__) . '/publishable';
-        $resourcePath = dirname(__DIR__) . "/resources";
+        $resourcePath    = dirname(__DIR__) . "/resources";
 
         $publishable = [
-           'assets' => [
-               "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
-           ],
-           'config' => [
-               "{$publishablePath}/config/blogger.php" => config_path('blogger.php'),
-           ],
-           'views' => [
-              "{$resourcePath}/views"  => resource_path('views' . config('blogger.view_path')),
-           ],
-           'js' => [
-               "{$resourcePath}/assets/js"  => resource_path('assets' . config('blogger.assets_path') . '/js'),
-           ],
-           'sass' => [
-               "{$resourcePath}/assets/sass"  => resource_path('assets' . config('blogger.assets_path') . '/sass'),
-           ],
-           'migrations' => [
-               "{$publishablePath}/migrations/" => database_path('migrations')
-           ],
-           'fonts' => [
-               dirname(__DIR__) . '/fonts' => public_path('/fonts/')
-           ]
+            'public'     => [
+                "{$publishablePath}/assets" => public_path(config('blogger.assets_path'))
+            ],
+            'config'     => [
+                "{$publishablePath}/config/blogger.php" => config_path('blogger.php'),
+            ],
+            'views'      => [
+                "{$resourcePath}/views" => resource_path('views/vendor/blogger'),
+            ],
+            'assets' => [
+                "{$resourcePath}/assets" => resource_path('assets/vendor/blogger'),
+            ],
+            'migrations' => [
+                "{$publishablePath}/migrations/" => database_path('migrations')
+            ],
+            'fonts'      => [
+                dirname(__DIR__) . '/fonts' => public_path('/fonts/')
+            ]
 
         ];
 
