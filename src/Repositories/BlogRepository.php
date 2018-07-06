@@ -5,15 +5,11 @@ namespace Cswiley\Blogger\Repositories;
 use Carbon\Carbon;
 use Cswiley\Blogger\Models\Blog;
 
-class BlogRepository
+class BlogRepository extends Repository
 {
-    protected $query;
-    protected $model;
-
     public function __construct(Blog $blog)
     {
-        $this->model = $blog;
-        $this->query = $blog;
+        parent::__construct($blog);
     }
 
     public function onlyActive()
@@ -33,13 +29,4 @@ class BlogRepository
 
         return $this;
     }
-
-    public function execute()
-    {
-        $query       = $this->query;
-        $this->query = $this->model;
-
-        return $query;
-    }
-
 }
