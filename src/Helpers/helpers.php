@@ -43,3 +43,15 @@ if (!function_exists('blog_public_path')) {
         return path_builder($base);
     }
 }
+
+if (!function_exists('blog_edit_path')) {
+    function blog_edit_path($idOrSlug)
+    {
+        $base   = ['/'];
+        $base[] = config('blogger.admin_route');
+        $base[] = $idOrSlug;
+        $base[] = 'edit';
+
+        return path_builder($base);
+    }
+}
