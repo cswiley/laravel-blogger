@@ -17,7 +17,7 @@ class LaravelBlogSetupTables extends Migration
 
         Schema::create('blogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->string('user_id');
             $table->string('slug')->nullable();
             $table->string('title')->nullable();
             $table->integer('visibility')->default(0);
